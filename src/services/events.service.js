@@ -1,3 +1,5 @@
+import { getEvents } from "../repositories/events.repository.js";
+
 export const getAllEvents = async () => {
-    return [];
+    return await getEvents();
 };

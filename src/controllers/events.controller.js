@@ -9,6 +9,8 @@ export const getEvents = async (req, res) => {
             payload: events
         });
     } catch (error) {
+        console.error("Error al obtener eventos:", error);
+
         res.status(500).json({
             status: "error",
             message: "Error al obtener los eventos"
