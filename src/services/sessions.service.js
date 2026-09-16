@@ -8,6 +8,8 @@ import {
     isValidPassword
 } from "../utils/hash.js";
 
+import { generateToken } from "../utils/jwt.js";
+
 export const registerUser = async ({
     first_name,
     last_name,
@@ -39,17 +41,34 @@ export const loginUser = async ({ email, password }) => {
     if (!email || !password) {
         throw new Error("Faltan campos obligatorios");
     }
+
     const normalizedEmail = email.trim().toLowerCase();
+
     const user = await getUserByEmail(normalizedEmail);
+
     if (!user) {
-        throw new Error("Credenciales inválidas");
+        throw new Error("Credenciales invalidas");
     }
+
     const validPassword = await isValidPassword(
         password,
         user.password
     );
+
     if (!validPassword) {
-        throw new Error("Credenciales inválidas");
+        throw new Error("Credenciales invalidas");
     }
-    return user;
+
+    const tokenPayload = {
+        id: user._id,
+        email: user.email,
+        role: user.role
+    };
+
+    const token = generateToken(tokenPayload);
+
+    return {
+        user,
+        token
+    };
 };
