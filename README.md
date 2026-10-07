@@ -6,7 +6,9 @@ API REST para una Plataforma de Eventos e Inscripciones, desarrollada con Node.j
 
 El proyecto consiste en el desarrollo de una API REST para gestionar una Plataforma de Eventos e Inscripciones.
 
-En esta etapa se implementa el sistema de autenticación de usuarios, incluyendo:
+En esta etapa se implementa y refactoriza el sistema de autenticación utilizando Passport.js, manteniendo el comportamiento externo de las rutas existentes.
+
+La autenticación incluye:
 
 - Registro de usuarios.
 - Validación de datos.
@@ -17,9 +19,10 @@ En esta etapa se implementa el sistema de autenticación de usuarios, incluyendo
 - Autenticación mediante cookies HTTP-only.
 - Consulta del usuario autenticado.
 - Cierre de sesión mediante logout.
-- Middleware para verificar tokens JWT.
+- Estrategias de autenticación mediante Passport.js.
+- Validación del JWT desde la cookie `currentUser`.
 
-El proyecto utiliza una arquitectura por capas para separar las responsabilidades de rutas, controladores, servicios, repositorios, DAO, modelos y utilidades.
+El proyecto utiliza una arquitectura por capas para separar responsabilidades entre rutas, controladores, repositorios, DAO, modelos y utilidades.
 
 ---
 
@@ -32,6 +35,9 @@ El proyecto utiliza una arquitectura por capas para separar las responsabilidade
 - MongoDB
 - MongoDB Atlas
 - Mongoose
+- Passport.js
+- Passport Local
+- Passport JWT
 - bcrypt
 - jsonwebtoken
 - dotenv
