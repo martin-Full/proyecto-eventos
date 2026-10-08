@@ -2,12 +2,11 @@ import {
     getAllEvents,
     createEvent,
     getEventById,
-    updateEvent,
-    deleteEvent
+    updateEvent
 } from "../dao/events.dao.js";
 
-export const getEvents = async () => {
-    return await getAllEvents();
+export const getEvents = async (options) => {
+    return await getAllEvents(options);
 };
 
 export const createEventRepository = async (eventData) => {
@@ -20,8 +19,4 @@ export const getEventByIdRepository = async (id) => {
 
 export const updateEventRepository = async (id, eventData) => {
     return await updateEvent(id, eventData);
-};
-
-export const deleteEventRepository = async (id) => {
-    return await deleteEvent(id);
 };
