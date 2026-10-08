@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 
+
 import {
     getSessions,
     registerUser,
@@ -8,6 +9,8 @@ import {
     getCurrentUser,
     logoutUser
 } from "../controllers/sessions.controller.js";
+
+import { auth } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -93,31 +96,7 @@ router.post(
     loginUser
 );
 
-router.get(
-    "/current",
-    (req, res, next) => {
-        passport.authenticate(
-            "current",
-            { session: false },
-            (error, user) => {
-                if (error) {
-                    return next(error);
-                }
-
-                if (!user) {
-                    return res.status(401).json({
-                        status: "error",
-                        message: "No autenticado"
-                    });
-                }
-
-                req.user = user;
-                next();
-            }
-        )(req, res, next);
-    },
-    getCurrentUser
-);
+router.get("/current", auth, getCurrentUser);
 
 router.post("/logout", logoutUser);
 
