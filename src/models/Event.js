@@ -37,6 +37,12 @@ const eventSchema = new mongoose.Schema(
             min: 1
         },
 
+        reservedSeats: {
+            type: Number,
+            default: 0,
+            min: 0
+        },
+
         price: {
             type: Number,
             required: true,

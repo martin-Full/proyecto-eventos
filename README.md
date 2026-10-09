@@ -1,43 +1,26 @@
 # Plataforma de Eventos e Inscripciones
 
-API REST para una Plataforma de Eventos e Inscripciones, desarrollada con Node.js, Express y MongoDB.
+## Descripción
 
-## Descripcion
+API REST desarrollada con Node.js, Express y MongoDB para gestionar usuarios, autenticación, eventos e inscripciones a eventos.
 
-El proyecto consiste en el desarrollo de una API REST para gestionar eventos, usuarios e inscripciones.
+El proyecto implementa autenticación mediante Passport y JWT, autorización por roles y ownership, gestión de eventos, sistema de tickets/inscripciones, control de cupos y envío de emails de confirmación mediante Nodemailer.
 
-La aplicación utiliza una arquitectura por capas para separar responsabilidades entre rutas, controladores, servicios, repositorios, DAO y modelos.
-
-En esta etapa se implementa autenticación y autorización basada en roles mediante Passport.js, JWT y cookies HTTP-only.
-
-## Tecnologias utilizadas
+## Tecnologías utilizadas
 
 - Node.js
-- Express.js
-- JavaScript
-- ES Modules
+- Express
 - MongoDB
-- MongoDB Atlas
 - Mongoose
-- Passport.js
-- Passport Local
-- Passport JWT
+- Passport
+- JWT
+- Nodemailer
 - bcrypt
-- jsonwebtoken
 - dotenv
-- Cookies HTTP-only
-- Nodemon
---
+- Postman
+- Git y GitHub
 
-## Requisitos
-
-Para ejecutar el proyecto es necesario tener instalado:
-
-- Node.js
-- npm
-- Una cuenta de MongoDB Atlas
-
-## Instalacion
+## Instalación
 
 Clonar el repositorio:
 

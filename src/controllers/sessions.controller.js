@@ -42,7 +42,10 @@ export const loginUser = (req, res) => {
 
     res.status(200).json({
         status: "success",
-        message: "Login correcto"
+        message: "Login correcto",
+         payload: {
+        token
+    }
     });
 };
 
