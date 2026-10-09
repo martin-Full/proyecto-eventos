@@ -7,6 +7,8 @@ import {
     cancelEvent
 } from "../services/events.service.js";
 
+import { eventDTO } from "../dto/event.dto.js";
+
 export const getEvents = async (req, res) => {
     try {
         const {
@@ -33,12 +35,13 @@ export const getEvents = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            data: result.events,
+            data: result.events.map(eventDTO),
             page: result.page,
             limit: result.limit,
             total: result.total,
             totalPages: result.totalPages
         });
+
     } catch (error) {
         console.error("Error al obtener eventos:", error);
 
@@ -62,8 +65,9 @@ export const getEvent = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            data: event
+            data: eventDTO(event)
         });
+
     } catch (error) {
         console.error("Error al obtener evento:", error);
 
@@ -83,8 +87,9 @@ export const createEvent = async (req, res) => {
 
         res.status(201).json({
             status: "success",
-            data: event
+            data: eventDTO(event)
         });
+
     } catch (error) {
         console.error("Error al crear evento:", error);
 
@@ -106,7 +111,6 @@ export const updateEvent = async (req, res) => {
             });
         }
 
-
         const updatedEvent = await updateEventService(
             req.params.id,
             req.body
@@ -114,8 +118,9 @@ export const updateEvent = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            data: updatedEvent
+            data: eventDTO(updatedEvent)
         });
+
     } catch (error) {
         console.error("Error al modificar evento:", error);
 
@@ -147,7 +152,6 @@ export const updateEventStatus = async (req, res) => {
             });
         }
 
-
         let updatedEvent;
 
         if (status === "published") {
@@ -157,14 +161,16 @@ export const updateEventStatus = async (req, res) => {
         } else {
             return res.status(400).json({
                 status: "error",
-                message: "Solo se permite publicar o cancelar eventos mediante esta ruta"
+                message:
+                    "Solo se permite publicar o cancelar eventos mediante esta ruta"
             });
         }
 
         res.status(200).json({
             status: "success",
-            data: updatedEvent
+            data: eventDTO(updatedEvent)
         });
+
     } catch (error) {
         console.error("Error al cambiar estado:", error);
 

@@ -39,15 +39,15 @@ const validateEventData = (eventData, isUpdate = false) => {
 
     if (date !== undefined) {
         const eventDate = new Date(date);
-
+    }
         if (Number.isNaN(eventDate.getTime())) {
             throw new Error("La fecha del evento no es válida");
         }
 
-        if (!isUpdate && eventDate <= new Date()) {
-            throw new Error("La fecha del evento debe ser futura");
-        }
-    }
+        if (eventDate <= new Date()) {
+    throw new Error("La fecha del evento debe ser futura");
+        }    
+
 };
 
 export const getAllEvents = async (options = {}) => {

@@ -4,6 +4,12 @@ export const findUserByEmail = async (email) => {
     return await User.findOne({ email });
 };
 
+export const findUserById = async (id) => {
+    return await User.findById(id).select(
+        "_id first_name last_name email role"
+    );
+};
+
 export const createUser = async (userData) => {
     return await User.create(userData);
 };

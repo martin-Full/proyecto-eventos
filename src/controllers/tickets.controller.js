@@ -5,35 +5,29 @@ import {
     cancelTicketService
 } from "../services/tickets.service.js";
 
-import User from "../models/User.js";
+import { ticketDTO } from "../dto/ticket.dto.js";
 import { sendConfirmationEmail } from "../utils/mailer.js";
-
 
 export const createTicket = async (req, res) => {
     try {
         const { eid } = req.params;
         const { quantity } = req.body;
 
-        const ticket = await createTicketService(
+        const result = await createTicketService(
             req.user._id,
             eid,
             quantity
         );
 
-        const user = await User.findById(req.user._id);
-
-        const populatedTicket = await ticket.populate(
-            "event",
-            "title date location"
-        );
+        const ticket = result.ticket;
 
         let emailSent = false;
 
         try {
             await sendConfirmationEmail({
-                email: user.email,
-                name: `${user.first_name} ${user.last_name}`,
-                event: populatedTicket.event,
+                email: result.user.email,
+                name: `${result.user.first_name} ${result.user.last_name}`,
+                event: result.event,
                 ticket
             });
 
@@ -48,7 +42,7 @@ export const createTicket = async (req, res) => {
 
         res.status(201).json({
             status: "success",
-            data: ticket,
+            data: ticketDTO(ticket),
             emailSent
         });
 
@@ -62,14 +56,13 @@ export const createTicket = async (req, res) => {
     }
 };
 
-
 export const getMyTickets = async (req, res) => {
     try {
         const tickets = await getMyTicketsService(req.user._id);
 
         res.status(200).json({
             status: "success",
-            data: tickets
+            data: tickets.map(ticketDTO)
         });
 
     } catch (error) {
@@ -82,7 +75,6 @@ export const getMyTickets = async (req, res) => {
     }
 };
 
-
 export const getEventTickets = async (req, res) => {
     try {
         const tickets = await getEventTicketsService(
@@ -91,7 +83,7 @@ export const getEventTickets = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            data: tickets
+            data: tickets.map(ticketDTO)
         });
 
     } catch (error) {
@@ -107,7 +99,6 @@ export const getEventTickets = async (req, res) => {
     }
 };
 
-
 export const cancelTicket = async (req, res) => {
     try {
         const ticket = await cancelTicketService(
@@ -118,7 +109,7 @@ export const cancelTicket = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            data: ticket
+            data: ticketDTO(ticket)
         });
 
     } catch (error) {

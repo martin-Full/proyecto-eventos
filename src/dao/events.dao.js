@@ -24,7 +24,10 @@ export const getAllEvents = async ({
             .sort({ [sortField]: 1 })
             .skip(skip)
             .limit(limit)
-            .populate("organizer", "first_name last_name email"),
+            .populate(
+                "organizer",
+                "first_name last_name email"
+            ),
 
         Event.countDocuments(filters)
     ]);
@@ -41,7 +44,10 @@ export const createEvent = async (eventData) => {
 
 export const getEventById = async (id) => {
     return await Event.findById(id)
-        .populate("organizer", "first_name last_name email");
+        .populate(
+            "organizer",
+            "first_name last_name email"
+        );
 };
 
 export const updateEvent = async (id, eventData) => {
@@ -52,5 +58,22 @@ export const updateEvent = async (id, eventData) => {
             new: true,
             runValidators: true
         }
-    ).populate("organizer", "first_name last_name email");
+    ).populate(
+        "organizer",
+        "first_name last_name email"
+    );
+};
+
+export const getEventByIdWithSession = async (
+    id,
+    session
+) => {
+    return await Event.findById(id).session(session);
+};
+
+export const saveEventWithSession = async (
+    event,
+    session
+) => {
+    return await event.save({ session });
 };
