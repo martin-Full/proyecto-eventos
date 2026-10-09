@@ -1,6 +1,15 @@
 import nodemailer from "nodemailer";
 import { env } from "../config/env.js";
 
+// Diagnóstico de la configuración SMTP
+console.log("SMTP host:", env.MAIL_HOST);
+console.log("SMTP puerto:", env.MAIL_PORT);
+console.log(
+    "Usuario configurado como Gmail:",
+    env.MAIL_USER?.endsWith("@gmail.com")
+);
+
+// Configuración del transporte de correo
 const transporter = nodemailer.createTransport({
     host: env.MAIL_HOST,
     port: Number(env.MAIL_PORT),
@@ -10,7 +19,15 @@ const transporter = nodemailer.createTransport({
         pass: env.MAIL_PASS
     }
 });
+transporter.verify()
+    .then(() => {
+        console.log("✅ Gmail SMTP autenticado correctamente");
+    })
+    .catch((error) => {
+        console.error("❌ Error al verificar Gmail SMTP:", error.message);
+    });
 
+// Enviar email de confirmación de inscripción
 export const sendConfirmationEmail = async ({
     email,
     name,
@@ -21,6 +38,7 @@ export const sendConfirmationEmail = async ({
         from: env.MAIL_FROM,
         to: email,
         subject: `Inscripción confirmada - ${event.title}`,
+
         text: `
 Hola ${name},
 
@@ -33,6 +51,7 @@ Código de reserva: ${ticket.reservationCode}
 
 ¡Te esperamos!
         `,
+
         html: `
             <h2>Inscripción confirmada</h2>
 
