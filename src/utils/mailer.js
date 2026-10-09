@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import { env } from "../config/env.js";
 
-
 const transporter = nodemailer.createTransport({
     host: env.MAIL_HOST,
     port: Number(env.MAIL_PORT),
@@ -67,8 +66,8 @@ Código de reserva: ${ticket.reservationCode}
                     <strong>Código de reserva:</strong>
                     ${ticket.reservationCode}
                 </li>
-            </ul
-            >
+            </ul>
+
             <p>¡Te esperamos!</p>
         `
     });
